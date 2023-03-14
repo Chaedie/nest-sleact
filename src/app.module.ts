@@ -42,7 +42,7 @@ import { Workspaces } from './entities/Workspaces';
         Workspaces,
       ],
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: false,
       logging: true,
       keepConnectionAlive: true,
       charset: 'utf8mb4',

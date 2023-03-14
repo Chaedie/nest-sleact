@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   Column,
   CreateDateColumn,
@@ -25,12 +26,27 @@ export class Users {
   id: number;
 
   @Column('varchar', { name: 'email', unique: true, length: 30 })
+  @ApiProperty({
+    example: 'asdf@asdf.com',
+    description: '이메일',
+    required: true,
+  })
   email: string;
 
   @Column('varchar', { name: 'nickname', length: 30 })
+  @ApiProperty({
+    example: '닉네임',
+    description: '닉네임',
+    required: true,
+  })
   nickname: string;
 
   @Column('varchar', { name: 'password', length: 100, select: false })
+  @ApiProperty({
+    example: 'asdfasdf',
+    description: '비밀번호',
+    required: true,
+  })
   password: string;
 
   @CreateDateColumn()
