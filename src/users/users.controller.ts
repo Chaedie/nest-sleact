@@ -1,25 +1,31 @@
-import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
 import {
-  ApiOkResponse,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  Res,
+  UseInterceptors,
+} from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
+import { User } from 'src/common/decorators/user.decorator';
 import { JoinRequestDto } from './dto/join.request.dto';
-import { UserDto } from './dto/user.dto';
+import { UserDto } from '../common/dto/user.dto';
 import { UsersService } from './users.service';
+import { UndefinedToNullInterceptor } from 'src/common/Interceptors/undefinedToNull.interceptor';
 
-@ApiTags('Users')
 @Controller('api/users')
+@ApiTags('Users')
+@UseInterceptors(UndefinedToNullInterceptor)
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) {}
 
   @ApiResponse({ type: UserDto })
   @ApiOperation({ summary: '내 정보 조회' })
   @Get()
-  getUsers(@Req() req) {
-    return req.user;
+  getUsers(@User() user) {
+    return user;
   }
 
   @ApiOperation({ summary: '회원가입' })
@@ -32,8 +38,8 @@ export class UsersController {
   @ApiResponse({ status: 500, description: '서버 에러' })
   @ApiOperation({ summary: '로그인' })
   @Post('login')
-  login(@Req() req) {
-    return req.user;
+  login(@User() user) {
+    return user;
   }
 
   @ApiOperation({ summary: '로그아웃' })
