@@ -10,7 +10,6 @@ async function bootstrap() {
     .setTitle('슬랙 클론 코딩')
     .setDescription('슬랙 클론 코딩 API 문서')
     .setVersion('1.0')
-    .addTag('cats')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
